@@ -23,15 +23,41 @@ module.exports = {
         author: mongoose.Types.ObjectId(user.id)
       });
     },
-    deleteNote: async (parent, { id }, { models }) => {
+    deleteNote: async (parent, { id }, { models, user }) => {
+        // user가 아니면 인증 에러 던지기
+        if (!user) {
+            throw new AuthenticationError('You must be signed in to delete a note');
+        }
+
+        // note 찾기
+        const note = await models.Note.findById(id);
+        // note 소유자와 현재 사용자가 불일치하면 접근 에러 던지기
+        if (note && String(note.author) !== user.id) {
+            throw new ForbiddenError("You don't have permissions to delete the note");
+        }
+
         try {
-            await models.Note.findOneAndRemove({ _id: id });
+            // 문제가 없으면 note 삭제
+            await note.remove();
             return true;
         } catch (err) {
             return false;
         }
     },
-    updateNote: async (parent, { content, id }, { models }) => {
+    updateNote: async (parent, { content, id }, { models, user }) => {
+        // user가 아니면 인증 에러 던지기
+        if (!user) {
+            throw new AuthenticationError("You must bd signed in to update a note");
+        }
+
+        // note 찾기
+        const note = await models.Note.findById(id);
+        // note 소유자와 현재 사용자가 불일치하면 접근 에러 던지기
+        if (note && String(note.author) !== user.id) {
+            throw new ForbiddenError("You don't have permissions to update the note");
+        }
+
+        // DB의 노트를 업데이트하고 업데이트된 노트를 반환
         return await models.Note.findOneAndUpdate(
             {
                 _id: id,
