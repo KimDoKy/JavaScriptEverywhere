@@ -9,12 +9,12 @@ const noteSchema = new mongoose.Schema(
             required: true,
         },
         author: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
             required: true
         }
     },
     {
-        // Date 자료형으로 createAt, updateAt 필드 할당
         timestamps: true
     }
 );
