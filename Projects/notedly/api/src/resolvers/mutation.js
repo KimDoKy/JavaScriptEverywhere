@@ -18,9 +18,8 @@ module.exports = {
       }
 
       return await models.Note.create({
-        content: args.content,
-        // author의 몽고 ID 참조
-        author: mongoose.Types.ObjectId(user.id)
+          content: args.content,
+          author: mongoose.Types.ObjectId(user.id),
       });
     },
     deleteNote: async (parent, { id }, { models, user }) => {

@@ -5,11 +5,12 @@ module.exports = gql`
   type Note {
     id: ID!
     content: String!
-    author: String!
+    author: User!
+    favoriteCount: Int!
+    favoritedBy: [User]
     createdAt: DateTime!
     updatedAt: DateTime!
-    favoriteCount: Int!
-    favoritedBy: [User!]
+
   }
 
   type User {
@@ -22,7 +23,6 @@ module.exports = gql`
   }
 
   type Query {
-    hello: String
     notes: [Note!]!
     note(id: ID!): Note!
     user(username: String!): User
