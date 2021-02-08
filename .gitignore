@@ -64,5 +64,13 @@ typings/
 # next.js build output
 .next
 
-# VSCode settings
-.vscode/
+# local vscode settings
+.vscode
+
+# built files
+dist
+.cache
+
+# cypress videos & screenshots
+cypress/videos
+cypress/screenshots
