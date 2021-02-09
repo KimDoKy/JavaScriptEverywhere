@@ -52,6 +52,8 @@ const SignUp = props => {
         onCompleted: data => {
             // JWT를 localStorage에 저장
             localStorage.setItem('token', data.signUp);
+            // 사용자를 홈페이지로 리다이렉션
+            props.history.push('/');
         }
     });
 
