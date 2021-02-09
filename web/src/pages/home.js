@@ -36,7 +36,40 @@ const  Home = () => {
     if (error) return <p>Error!</p>;
 
     // 데이터 로딩에 성공하면 UI에 데이터 표시
-    return <NoteFeed notes={data.noteFeed.notes} />;
+    // 부모 원소 제공을 위해 <React.Fragment> 추가
+    return (
+      <React.Fragment>
+        <NoteFeed notes={data.noteFeed.notes} />
+        {data.noteFeed.hasNextPage && (
+            // onClick은 현재 커서를 변수로 전달하며 쿼리를 수행한다
+            <Button
+              onClick={() =>
+                  fetchMore({
+                      variables: {
+                          cursor: data.noteFeed.cursor
+                      },
+                      updateQuery: (previousResult, { fetchMoreResult }) => {
+                          return {
+                              noteFeed: {
+                                  cursor: fetchMoreResult.noteFeed.cursor,
+                                  hasNextPage: fetchMoreResult.noteFeed.hasNextPage,
+                                  // 새 결과를 기존 결과와 결함
+                                  notes: [
+                                      ...previousResult.noteFeed.notes,
+                                      ...fetchMoreResult.noteFeed.notes
+                                  ],
+                                  __typename: 'noteFeed'
+                              }
+                          };
+                      }
+                  })
+              }
+            >
+            Lead more
+            </Button>
+        )}
+     </React.Fragment>
+  );
 };
 
 export default Home;
