@@ -72,7 +72,12 @@ const Navigation = () => {
               </Link>
             </li>
             <li>
-              <Link to="/new">New</Link>
+              <Link to="/new">
+                <span aria-hidden="true" role="img">
+                   ➕
+                </span>
+                New
+              </Link>
             </li>
           </NavList>
         </Nav>
