@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from '../img/logo.svg';
 import { useQuery, gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import ButtonAsLink from './ButtonAsLink';
 
 // 로컬 쿼리
 const IS_LOGGED_IN = gql`
@@ -35,7 +36,7 @@ const UserState = styled.div`
 
 const Header = props => {
     // 로그인 상태인 사용자에 대해 훅 쿼리
-    const { data } = useQuery(IS_LOGGED_IN);
+    const { data, client } = useQuery(IS_LOGGED_IN);
 
     return (
         <HeaderBar>
@@ -44,7 +45,20 @@ const Header = props => {
           {/* 로그인 중이면 로그아웃 링크, 로그아웃 상태면 로그인 링크로 */}
           <UserState>
             {data.isLoggedIn ? (
-                <p>Log Out</p>
+                <ButtonAsLink
+                  onClink={() => {
+                      // 토큰 제거
+                      localStorage.removeItem('token');
+                      // 애플리케이션 캐시 삭제
+                      client.resetStore();
+                      // 로컬 상테 업데이트
+                      client.writeData({ data: {isLoggedIn: false } });
+                      // 사용자를 홈페이지로 리다이렉션
+                      props.history.push('/');
+                  }}
+                >
+                  Logout
+                </ButtonAsLink>
             ) : (
                 <p>
                   <Link to={'/signin'}>Sign In</Link> or {' '}
@@ -56,4 +70,4 @@ const Header = props => {
     );
 };
 
-export default Header;
+export default withRouter(Header);

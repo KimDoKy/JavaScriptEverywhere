@@ -43,6 +43,9 @@ const data = {
 // 초기 로드에 캐시 데이터 쓰기
 cache.writeData({ data });
 
+// 캐시 초기화 후 캐시 데이터 쓰기
+client.onResetStore(() => cache.writeData({ data }));
+
 const App = () => {
     return (
         <ApolloProvider client={client}>
