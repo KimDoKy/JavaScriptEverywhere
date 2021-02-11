@@ -35,6 +35,14 @@ const client = new ApolloClient({
     connectToDevTools: true
 });
 
+// 로컬 토큰 확인
+const data = {
+    isLoggedIn: !!localStorage.getItem('token')
+};
+
+// 초기 로드에 캐시 데이터 쓰기
+cache.writeData({ data });
+
 const App = () => {
     return (
         <ApolloProvider client={client}>

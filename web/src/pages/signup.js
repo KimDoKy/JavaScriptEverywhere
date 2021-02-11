@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation, useApolloclient, gql } from '@apollo/client';
+import { useMutation, useApolloClient, gql } from '@apollo/client';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
@@ -47,11 +47,16 @@ const SignUp = props => {
         document.title = 'Sign Up - Notedly';
     });
 
-    // 뮤테이션 훅 추가
+    // 아폴로 클라이언트
+    const client = useApolloClient();
+
+    // 뮤테이션 훅
     const [signUp, { loading, error }] = useMutation(SIGNUP_USER, {
         onCompleted: data => {
             // JWT를 localStorage에 저장
             localStorage.setItem('token', data.signUp);
+            // 로컬 캐시 업데이트
+            client.writeData({ data: { isLoggedIn: true } });
             // 사용자를 홈페이지로 리다이렉션
             props.history.push('/');
         }
