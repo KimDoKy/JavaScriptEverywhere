@@ -46,7 +46,7 @@ const Header = props => {
           <UserState>
             {data.isLoggedIn ? (
                 <ButtonAsLink
-                  onClink={() => {
+                  onClick={() => {
                       // 토큰 제거
                       localStorage.removeItem('token');
                       // 애플리케이션 캐시 삭제
