@@ -10,12 +10,12 @@ function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: false
         }
     });
 
     // HTML 파일 불러오기
-    window.loadFile('index.html');
+    window.loadURL('http://localhost:1234');
     // 개발자 모드라면 브라우저 개발자 도구 열기
     if (is.development) {
         window.webContents.openDevTools();
