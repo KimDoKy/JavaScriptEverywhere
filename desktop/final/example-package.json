@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "description": "An Electron client example for the JavaScript Everywhere book",
   "main": "src/index.js",
+  "build": {
+    "appId": "io.jseverywhere.notedly",
+    "productName": "Notedly",
+    "directories": {
+      "buildResources": "resources"
+    }
+  },
   "scripts": {
     "start": "electron src/index.js",
     "final": "electron final/index.js",
@@ -21,20 +28,13 @@
   "homepage": "https://jseverywhere.io",
   "devDependencies": {
     "electron": "^6.0.0",
-    "electron-builder": "21.2.0",
-    "eslint": "6.1.0",
-    "eslint-config-prettier": "6.0.0",
-    "eslint-plugin-prettier": "3.1.0",
-    "prettier": "1.18.2"
+    "electron-builder": "^21.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2"
   },
   "dependencies": {
-    "electron-util": "0.12.1"
-  },
-  "build": {
-      "appId": "io.jserverwhere.notedly",
-      "productName": "Notedly",
-      "directories": {
-          "buildResources": "resources"
-      }
+    "electron-util": "^0.12.1"
   }
 }
